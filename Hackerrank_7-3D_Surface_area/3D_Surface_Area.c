@@ -42,3 +42,4 @@ int main(){
     printf("\n%d",result);
     return 0;  
 }
+
