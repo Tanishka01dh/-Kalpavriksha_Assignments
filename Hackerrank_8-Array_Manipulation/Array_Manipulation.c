@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-long arrayManipulation(int n, int queries_rows, int queries_columns, int queries[queries_rows][3]) {
+long arrayManipulation(int n, int queries_rows, int queries_columns, int** queries) {
     long *arr = calloc(n+2,sizeof(long));
        if (arr == NULL) {
         return 0;
@@ -30,17 +30,26 @@ int main(){
     int n,q;  
     scanf("%d",&n);
     scanf("%d",&q);
-    int (*queries)[3] = malloc(q * sizeof(*queries));
-
+    int **queries = malloc(q * sizeof(int*));
     if (queries == NULL) {
-        return 1;
-    }
+    printf("Memory allocation failed\n");
+    return 1;
+}
+
     for(int i=0;i<q;i++){
-        for(int j =0;j<3;j++){
-        scanf("%d", &queries[i][j]);}
+        queries[i] = malloc(3 * sizeof(int));
+        scanf("%d %d %d", &queries[i][0],
+                      &queries[i][1],
+                      &queries[i][2]);
     }
+
     long result = arrayManipulation(n,q,3,queries);
     printf("%ld", result);
+
+    for(int i = 0; i < q; i++) {
+        free(queries[i]);
+    }
     free(queries);
     return 0;
 }
+
